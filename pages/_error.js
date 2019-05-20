@@ -1,4 +1,7 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
+import { Row } from 'antd';
 
 export default class Error extends React.Component {
   static getInitialProps({ res, err }) {

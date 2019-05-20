@@ -19,7 +19,7 @@ class Index extends Component {
     return (
       <div>
         <p>Hello {username}</p>
-        <Link href="/about">
+        <Link href="/test/3">
           <Button type="primary">About</Button>
         </Link>
         <Button
@@ -36,9 +36,10 @@ class Index extends Component {
 
 Index.propTypes = {
   username: PropTypes.string,
+  getUserInfor: PropTypes.func,
 };
 
-Index.defaultProps = { username: '' };
+Index.defaultProps = { username: '', getUserInfor: () => {} };
 
 const mapStateToProps = state => {
   const { username } = state.user;
