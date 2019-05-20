@@ -1,9 +1,7 @@
-/* eslint-disable import/no-unresolved */
 import React, { Component } from 'react';
 import Link from 'next/link';
 import { Button } from 'antd';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { getUserInfor } from 'store/actions/user';
 
 import 'app.less';
@@ -33,13 +31,6 @@ class Index extends Component {
     );
   }
 }
-
-Index.propTypes = {
-  username: PropTypes.string,
-  getUserInfor: PropTypes.func,
-};
-
-Index.defaultProps = { username: '', getUserInfor: () => {} };
 
 const mapStateToProps = state => {
   const { username } = state.user;

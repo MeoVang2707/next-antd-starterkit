@@ -12,11 +12,16 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', prettierOptions],
     'react/prefer-stateless-function': 0,
+    'react/jsx-filename-extension': 0,
+    'import/no-unresolved': 0,
+    'no-shadow': 0,
+    'react/prop-types': 0,
+    'react/destructuring-assignment': 0,
   },
   env: {
     es6: true,
     browser: true,
     node: true,
-    jest: true
+    jest: true,
   },
 };

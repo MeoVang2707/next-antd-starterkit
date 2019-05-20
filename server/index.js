@@ -36,7 +36,7 @@ app
 
     server.get('/test/:shopId', (req, res) => {
       const actualPage = '/about';
-      const queryParams = { articleId: req.params.shopId };
+      const queryParams = { shopId: req.params.shopId };
       app.render(req, res, actualPage, queryParams);
     });
 
