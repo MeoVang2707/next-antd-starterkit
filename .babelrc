@@ -2,16 +2,16 @@
   "presets": ["next/babel"],
   "plugins": [
     [
+      "module-resolver",
+      {
+        "root": ["./"]
+      }
+    ],
+    [
       "import",
       {
         "libraryName": "antd",
         "style": true
-      }
-    ],
-    [
-      "module-resolver",
-      {
-        "root": ["./"]
       }
     ]
   ]

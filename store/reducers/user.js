@@ -1,25 +1,24 @@
 /* eslint-disable no-console */
-import { SAVE_USER_INFOR } from '../actions/user';
+import { SAVE_USER_INFOR, GET_USER_INFOR } from '../actions/user';
 
 const initialState = {
   userId: null,
-  userName: 'Vũ Huy Hoàng',
+  username: 'Hoàng',
   email: '',
 };
 
 export default function sentence(oldState = initialState, action) {
   switch (action.type) {
+    case GET_USER_INFOR: {
+      return oldState;
+    }
     case SAVE_USER_INFOR: {
       if (!action.data) {
         return oldState;
       }
       return {
         ...oldState,
-        userId: action.data.id,
-        userRoles: action.data.roles,
-        userName: action.data.name,
-        email: action.data.email,
-        groups: action.data.group_ids,
+        username: action.data.username,
       };
     }
     default:

@@ -88,10 +88,222 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./api/config.js":
+/*!***********************!*\
+  !*** ./api/config.js ***!
+  \***********************/
+/*! exports provided: apiBase */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiBase", function() { return apiBase; });
+/* eslint-disable import/prefer-default-export */
+var apiBase = 'http://localhost:5000';
+
+/***/ }),
+
+/***/ "./api/index.js":
+/*!**********************!*\
+  !*** ./api/index.js ***!
+  \**********************/
+/*! exports provided: get, post, puts, deletes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "get", function() { return get; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "post", function() { return post; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "puts", function() { return puts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deletes", function() { return deletes; });
+/* harmony import */ var _babel_runtime_corejs2_core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/array/is-array */ "./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var localStorage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! localStorage */ "localStorage");
+/* harmony import */ var localStorage__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(localStorage__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./config */ "./api/config.js");
+
+
+
+/* eslint-disable no-loop-func */
+
+/* eslint-disable no-var */
+
+/* eslint-disable vars-on-top */
+
+/* eslint-disable prefer-const */
+
+/* eslint-disable no-param-reassign */
+
+/* eslint-disable no-restricted-syntax */
+
+/* eslint-disable guard-for-in */
+
+
+
+var headers = {
+  'Access-Control-Allow-Origin': '*'
+};
+
+function preSendData(data) {
+  for (var prop in data) {
+    var dataElement = data[prop];
+
+    if (dataElement == null || dataElement === undefined || dataElement === 'null' || dataElement === '' || dataElement === 'undefined') {
+      delete data[prop];
+    }
+  }
+
+  return data;
+}
+
+var request = axios__WEBPACK_IMPORTED_MODULE_2___default.a.create({
+  baseURL: _config__WEBPACK_IMPORTED_MODULE_4__["apiBase"],
+  headers: headers
+});
+var get = function get(endpoint) {
+  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var getlocalStorage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+  if (getlocalStorage && localStorage__WEBPACK_IMPORTED_MODULE_3___default.a.getItem('token')) {
+    config = Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_1__["default"])({}, config, {
+      headers: {
+        Authorization: localStorage__WEBPACK_IMPORTED_MODULE_3___default.a.getItem('token')
+      }
+    });
+  }
+
+  return request.get(endpoint, config);
+};
+var post = function post(endpoint, data) {
+  var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+    headers: null
+  };
+
+  if (localStorage__WEBPACK_IMPORTED_MODULE_3___default.a.getItem('token') && !config.headers) {
+    config = Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_1__["default"])({}, config, {
+      headers: {
+        Authorization: localStorage__WEBPACK_IMPORTED_MODULE_3___default.a.getItem('token')
+      }
+    });
+  }
+
+  data = preSendData(data);
+  var formData = new FormData();
+
+  if (data && data.hasFile) {
+    config = Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_1__["default"])({}, config, {
+      header: Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_1__["default"])({}, config.headers, {
+        'Content-Type': 'multipart/form-data'
+      })
+    });
+    delete data.hasFile;
+
+    for (var prop in data) {
+      if (_babel_runtime_corejs2_core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0___default()(data[prop])) {
+        data[prop].forEach(function (dt) {
+          formData.append(prop, dt);
+        });
+      } else {
+        formData.append(prop, data[prop]);
+      }
+
+      delete data[prop];
+    }
+
+    data = formData;
+  }
+
+  return request.post(endpoint, data, config);
+};
+var puts = function puts(endpoint, data) {
+  var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+    headers: {}
+  };
+
+  if (localStorage__WEBPACK_IMPORTED_MODULE_3___default.a.getItem('token')) {
+    config = Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_1__["default"])({}, config, {
+      headers: {
+        Authorization: localStorage__WEBPACK_IMPORTED_MODULE_3___default.a.getItem('token')
+      }
+    });
+  }
+
+  return request.put(endpoint, data, config);
+};
+var deletes = function deletes(endpoint, data) {
+  var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+    headers: {}
+  };
+
+  if (localStorage__WEBPACK_IMPORTED_MODULE_3___default.a.getItem('token')) {
+    config = Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_1__["default"])({}, config, {
+      headers: {
+        Authorization: localStorage__WEBPACK_IMPORTED_MODULE_3___default.a.getItem('token')
+      }
+    });
+  }
+
+  return request.delete(endpoint, config);
+};
+
+/***/ }),
+
+/***/ "./configStore.js":
+/*!************************!*\
+  !*** ./configStore.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return configStore; });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "redux");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var connected_react_router_immutable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! connected-react-router/immutable */ "connected-react-router/immutable");
+/* harmony import */ var connected_react_router_immutable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(connected_react_router_immutable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-saga */ "redux-saga");
+/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(redux_saga__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _store_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/reducers */ "./store/reducers/index.js");
+/* harmony import */ var _utils_history__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./utils/history */ "./utils/history.js");
+/* harmony import */ var _store_saga__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/saga */ "./store/saga/index.js");
+
+
+
+
+
+
+function configStore() {
+  var initialState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var option = arguments.length > 1 ? arguments[1] : undefined;
+  var sagaMiddleware = redux_saga__WEBPACK_IMPORTED_MODULE_2___default()();
+  var middlewares = [Object(connected_react_router_immutable__WEBPACK_IMPORTED_MODULE_1__["routerMiddleware"])(_utils_history__WEBPACK_IMPORTED_MODULE_4__["default"]), sagaMiddleware];
+  var enhancers = redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middlewares);
+  var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(Object(_store_reducers__WEBPACK_IMPORTED_MODULE_3__["default"])(), initialState, enhancers);
+  sagaMiddleware.run(_store_saga__WEBPACK_IMPORTED_MODULE_5__["default"]);
+  return store;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/array/is-array */ "core-js/library/fn/array/is-array");
+
+/***/ }),
 
 /***/ "./node_modules/@babel/runtime-corejs2/core-js/map.js":
 /*!************************************************************!*\
@@ -1047,10 +1259,10 @@ exports.createUrl = createUrl;
 
 /***/ }),
 
-/***/ "./pages/_app.js":
-/*!***********************!*\
-  !*** ./pages/_app.js ***!
-  \***********************/
+/***/ "./pages/_app.jsx":
+/*!************************!*\
+  !*** ./pages/_app.jsx ***!
+  \************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1075,9 +1287,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! next-redux-wrapper */ "next-redux-wrapper");
 /* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(next_redux_wrapper__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! redux */ "redux");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _reduxCustom_ruducers__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../reduxCustom/ruducers */ "./reduxCustom/ruducers/index.js");
+/* harmony import */ var _configStore__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../configStore */ "./configStore.js");
 
 
 
@@ -1087,17 +1297,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _jsxFileName = "/Users/vuhuyhoang/Documents/Hoang/Agile/CodeTest/hello-next/pages/_app.js";
+var _jsxFileName = "/Users/vuhuyhoang/Documents/Hoang/Agile/CodeTest/hello-next/pages/_app.jsx";
 
 
 
+ // import { createStore } from 'redux';
+// import history from 'utils/history';
 
 
-
-
-var makeStore = function makeStore(initialState, options) {
-  return Object(redux__WEBPACK_IMPORTED_MODULE_13__["createStore"])(_reduxCustom_ruducers__WEBPACK_IMPORTED_MODULE_14__["default"], initialState);
-};
 
 var AppContainer =
 /*#__PURE__*/
@@ -1120,20 +1327,20 @@ function (_App) {
       return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(next_app__WEBPACK_IMPORTED_MODULE_10__["Container"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 29
+          lineNumber: 25
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_11__["Provider"], {
         store: store,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 30
+          lineNumber: 26
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(Component, Object(_babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_3__["default"])({}, pageProps, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 31
+          lineNumber: 27
         },
         __self: this
       }))));
@@ -1188,56 +1395,76 @@ function (_App) {
   return AppContainer;
 }(next_app__WEBPACK_IMPORTED_MODULE_10___default.a);
 
-/* harmony default export */ __webpack_exports__["default"] = (next_redux_wrapper__WEBPACK_IMPORTED_MODULE_12___default()(makeStore)(AppContainer));
+/* harmony default export */ __webpack_exports__["default"] = (next_redux_wrapper__WEBPACK_IMPORTED_MODULE_12___default()(_configStore__WEBPACK_IMPORTED_MODULE_13__["default"])(AppContainer)); // export default AppContainer;
 
 /***/ }),
 
-/***/ "./reduxCustom/actions/user.js":
-/*!*************************************!*\
-  !*** ./reduxCustom/actions/user.js ***!
-  \*************************************/
-/*! exports provided: SAVE_USER_INFOR, saveUserInfor */
+/***/ "./store/actions/user.js":
+/*!*******************************!*\
+  !*** ./store/actions/user.js ***!
+  \*******************************/
+/*! exports provided: SAVE_USER_INFOR, GET_USER_INFOR, saveUserInfor, getUserInfor */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SAVE_USER_INFOR", function() { return SAVE_USER_INFOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_USER_INFOR", function() { return GET_USER_INFOR; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveUserInfor", function() { return saveUserInfor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserInfor", function() { return getUserInfor; });
 var SAVE_USER_INFOR = 'user/SAVE_USER_INFOR';
+var GET_USER_INFOR = 'user/GET_USER_INFOR';
 function saveUserInfor(data) {
   return {
     type: SAVE_USER_INFOR,
     data: data
   };
 }
+function getUserInfor() {
+  return {
+    type: GET_USER_INFOR
+  };
+}
 
 /***/ }),
 
-/***/ "./reduxCustom/ruducers/index.js":
-/*!***************************************!*\
-  !*** ./reduxCustom/ruducers/index.js ***!
-  \***************************************/
+/***/ "./store/reducers/index.js":
+/*!*********************************!*\
+  !*** ./store/reducers/index.js ***!
+  \*********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return createReducer; });
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "redux");
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user */ "./reduxCustom/ruducers/user.js");
+/* harmony import */ var connected_react_router_immutable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! connected-react-router/immutable */ "connected-react-router/immutable");
+/* harmony import */ var connected_react_router_immutable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(connected_react_router_immutable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_history__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/history */ "./utils/history.js");
+/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./user */ "./store/reducers/user.js");
 
 
-var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  user: _user__WEBPACK_IMPORTED_MODULE_1__["default"]
-});
-/* harmony default export */ __webpack_exports__["default"] = (rootReducer);
+
+ // const rootReducer = combineReducers({ user });
+
+function createReducer() {
+  var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
+    user: _user__WEBPACK_IMPORTED_MODULE_3__["default"]
+  });
+  var mergeWithRouterState = Object(connected_react_router_immutable__WEBPACK_IMPORTED_MODULE_1__["connectRouter"])(_utils_history__WEBPACK_IMPORTED_MODULE_2__["default"]);
+  return mergeWithRouterState(rootReducer); // return combineReducers({
+  //   user,
+  // });
+} // export default createReducer = () => {};
 
 /***/ }),
 
-/***/ "./reduxCustom/ruducers/user.js":
-/*!**************************************!*\
-  !*** ./reduxCustom/ruducers/user.js ***!
-  \**************************************/
+/***/ "./store/reducers/user.js":
+/*!********************************!*\
+  !*** ./store/reducers/user.js ***!
+  \********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1245,14 +1472,14 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return sentence; });
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
-/* harmony import */ var _actions_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/user */ "./reduxCustom/actions/user.js");
+/* harmony import */ var _actions_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/user */ "./store/actions/user.js");
 
 
 /* eslint-disable no-console */
 
 var initialState = {
   userId: null,
-  userName: 'Vũ Huy Hoàng',
+  username: 'Hoàng',
   email: ''
 };
 function sentence() {
@@ -1260,6 +1487,11 @@ function sentence() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
+    case _actions_user__WEBPACK_IMPORTED_MODULE_1__["GET_USER_INFOR"]:
+      {
+        return oldState;
+      }
+
     case _actions_user__WEBPACK_IMPORTED_MODULE_1__["SAVE_USER_INFOR"]:
       {
         if (!action.data) {
@@ -1267,11 +1499,7 @@ function sentence() {
         }
 
         return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, oldState, {
-          userId: action.data.id,
-          userRoles: action.data.roles,
-          userName: action.data.name,
-          email: action.data.email,
-          groups: action.data.group_ids
+          username: action.data.username
         });
       }
 
@@ -1282,15 +1510,224 @@ function sentence() {
 
 /***/ }),
 
-/***/ 1:
-/*!****************************************!*\
-  !*** multi private-next-pages/_app.js ***!
-  \****************************************/
+/***/ "./store/saga/index.js":
+/*!*****************************!*\
+  !*** ./store/saga/index.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return rootSaga; });
+/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/regenerator */ "./node_modules/@babel/runtime-corejs2/regenerator/index.js");
+/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user */ "./store/saga/user.js");
+
+
+var _marked =
+/*#__PURE__*/
+_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(rootSaga);
+
+// import 'regenerator-runtime/runtime';
+ // import formActionSaga from 'redux-form-saga';
+
+
+function rootSaga() {
+  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function rootSaga$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _context.next = 2;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["all"])([// authSaga.map(watcher => fork(watcher)),
+          Object(_user__WEBPACK_IMPORTED_MODULE_2__["getUserInforSaga"])()]);
+
+        case 2:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _marked);
+}
+
+/***/ }),
+
+/***/ "./store/saga/user.js":
+/*!****************************!*\
+  !*** ./store/saga/user.js ***!
+  \****************************/
+/*! exports provided: getUserInforSaga */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserInforSaga", function() { return getUserInforSaga; });
+/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/regenerator */ "./node_modules/@babel/runtime-corejs2/regenerator/index.js");
+/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _actions_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/user */ "./store/actions/user.js");
+/* harmony import */ var _api_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../api/index */ "./api/index.js");
+
+
+var _marked =
+/*#__PURE__*/
+_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(getUserInfor),
+    _marked2 =
+/*#__PURE__*/
+_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(getUserInforSaga);
+
+/* eslint-disable import/prefer-default-export */
+ // import axios from "axios";
+// import { apiBase } from "../../client/config";
+
+
+ // watcher saga: watches for actions dispatched to the store, starts worker saga
+
+function getUserInforAPI() {
+  var api = '/api/test';
+  return Object(_api_index__WEBPACK_IMPORTED_MODULE_3__["get"])(api);
+}
+
+function getUserInfor() {
+  var response;
+  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function getUserInfor$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _context.prev = 0;
+          _context.next = 3;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["call"])(getUserInforAPI);
+
+        case 3:
+          response = _context.sent;
+
+          if (!(response && response.status === 200 && response.data)) {
+            _context.next = 9;
+            break;
+          }
+
+          _context.next = 7;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
+            type: _actions_user__WEBPACK_IMPORTED_MODULE_2__["SAVE_USER_INFOR"],
+            data: {
+              username: response.data.username
+            }
+          });
+
+        case 7:
+          _context.next = 11;
+          break;
+
+        case 9:
+          _context.next = 11;
+          return null;
+
+        case 11:
+          _context.next = 17;
+          break;
+
+        case 13:
+          _context.prev = 13;
+          _context.t0 = _context["catch"](0);
+          _context.next = 17;
+          return null;
+
+        case 17:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _marked, null, [[0, 13]]);
+}
+
+function getUserInforSaga() {
+  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function getUserInforSaga$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.next = 2;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["takeEvery"])(_actions_user__WEBPACK_IMPORTED_MODULE_2__["GET_USER_INFOR"], getUserInfor);
+
+        case 2:
+        case "end":
+          return _context2.stop();
+      }
+    }
+  }, _marked2);
+}
+
+/***/ }),
+
+/***/ "./utils/history.js":
+/*!**************************!*\
+  !*** ./utils/history.js ***!
+  \**************************/
+/*! exports provided: isServer, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isServer", function() { return isServer; });
+/* harmony import */ var history__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! history */ "history");
+/* harmony import */ var history__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(history__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var window_or_global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! window-or-global */ "window-or-global");
+/* harmony import */ var window_or_global__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(window_or_global__WEBPACK_IMPORTED_MODULE_1__);
+/* eslint-disable import/no-mutable-exports */
+
+
+var isServer = !(typeof window_or_global__WEBPACK_IMPORTED_MODULE_1___default.a !== 'undefined' && window_or_global__WEBPACK_IMPORTED_MODULE_1___default.a.document && window_or_global__WEBPACK_IMPORTED_MODULE_1___default.a.document.createElement);
+var history = isServer ? Object(history__WEBPACK_IMPORTED_MODULE_0__["createMemoryHistory"])({
+  initialEntries: ['/']
+}) : Object(history__WEBPACK_IMPORTED_MODULE_0__["createBrowserHistory"])();
+/* harmony default export */ __webpack_exports__["default"] = (history);
+
+/***/ }),
+
+/***/ 0:
+/*!*****************************************!*\
+  !*** multi private-next-pages/_app.jsx ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! private-next-pages/_app.js */"./pages/_app.js");
+module.exports = __webpack_require__(/*! private-next-pages/_app.jsx */"./pages/_app.jsx");
 
+
+/***/ }),
+
+/***/ "axios":
+/*!************************!*\
+  !*** external "axios" ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("axios");
+
+/***/ }),
+
+/***/ "connected-react-router/immutable":
+/*!***************************************************!*\
+  !*** external "connected-react-router/immutable" ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("connected-react-router/immutable");
+
+/***/ }),
+
+/***/ "core-js/library/fn/array/is-array":
+/*!****************************************************!*\
+  !*** external "core-js/library/fn/array/is-array" ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/library/fn/array/is-array");
 
 /***/ }),
 
@@ -1426,6 +1863,28 @@ module.exports = require("core-js/library/fn/symbol/iterator");
 
 /***/ }),
 
+/***/ "history":
+/*!**************************!*\
+  !*** external "history" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("history");
+
+/***/ }),
+
+/***/ "localStorage":
+/*!*******************************!*\
+  !*** external "localStorage" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("localStorage");
+
+/***/ }),
+
 /***/ "next-redux-wrapper":
 /*!*************************************!*\
   !*** external "next-redux-wrapper" ***!
@@ -1503,6 +1962,28 @@ module.exports = require("redux");
 
 /***/ }),
 
+/***/ "redux-saga":
+/*!*****************************!*\
+  !*** external "redux-saga" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-saga");
+
+/***/ }),
+
+/***/ "redux-saga/effects":
+/*!*************************************!*\
+  !*** external "redux-saga/effects" ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-saga/effects");
+
+/***/ }),
+
 /***/ "regenerator-runtime":
 /*!**************************************!*\
   !*** external "regenerator-runtime" ***!
@@ -1511,6 +1992,17 @@ module.exports = require("redux");
 /***/ (function(module, exports) {
 
 module.exports = require("regenerator-runtime");
+
+/***/ }),
+
+/***/ "window-or-global":
+/*!***********************************!*\
+  !*** external "window-or-global" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("window-or-global");
 
 /***/ })
 

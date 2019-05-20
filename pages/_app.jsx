@@ -2,13 +2,9 @@ import React from 'react';
 import App, { Container } from 'next/app';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
-import { createStore } from 'redux';
-
-import reducer from '../reduxCustom/ruducers';
-
-const makeStore = (initialState, options) => {
-  return createStore(reducer, initialState);
-};
+// import { createStore } from 'redux';
+// import history from 'utils/history';
+import configStore from 'configStore';
 
 class AppContainer extends App {
   // eslint-disable-next-line no-unused-vars
@@ -35,4 +31,5 @@ class AppContainer extends App {
   }
 }
 
-export default withRedux(makeStore)(AppContainer);
+export default withRedux(configStore)(AppContainer);
+// export default AppContainer;
