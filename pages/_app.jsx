@@ -5,6 +5,7 @@ import withRedux from 'next-redux-wrapper';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import configStore from 'configStore';
+import Wrapper from 'MultyLanguage';
 
 class AppContainer extends App {
   // eslint-disable-next-line no-unused-vars
@@ -25,7 +26,9 @@ class AppContainer extends App {
       <Container>
         <Provider store={store}>
           <PersistGate loading={<div />} persistor={persistStore(store)}>
-            <Component {...pageProps} />
+            <Wrapper>
+              <Component {...pageProps} />
+            </Wrapper>
           </PersistGate>
         </Provider>
       </Container>
