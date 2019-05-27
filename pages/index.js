@@ -5,10 +5,26 @@ import { connect } from 'react-redux';
 import { getUserInfor } from 'store/actions/user';
 import { changeLanguage } from 'store/actions/locales';
 import { injectIntl, FormattedMessage, defineMessages } from 'react-intl';
+import { apiBase } from 'api/config';
+import socketIOClient from 'socket.io-client';
 
 import 'app.less';
 
 class Index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      temprature: null,
+    };
+  }
+
+  componentDidMount() {
+    const socket = socketIOClient(apiBase);
+    socket.on('templature', data =>
+      this.setState({ temprature: data.username }),
+    );
+  }
+
   getUserInfor = () => {
     const { getUserInfor } = this.props;
     getUserInfor();
@@ -16,7 +32,7 @@ class Index extends Component {
 
   render() {
     const { username, changeLanguage } = this.props;
-    // console.log('this.props', this.props);
+    const { temprature } = this.state;
     return (
       <div>
         <Row>
@@ -31,6 +47,7 @@ class Index extends Component {
         <p>
           <FormattedMessage id="hello" /> {username}
         </p>
+        <p>Nhiệt độ: {temprature}</p>
         <Link href="/test/3">
           <Button type="primary">About</Button>
         </Link>
@@ -48,7 +65,6 @@ class Index extends Component {
 
 const mapStateToProps = state => {
   const { username } = state.user;
-  console.log('state.user', state);
   return {
     username,
   };
