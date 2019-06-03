@@ -7,6 +7,8 @@ import { persistStore } from 'redux-persist';
 import configStore from 'configStore';
 import Wrapper from 'MultyLanguage';
 
+import 'app.less';
+
 class AppContainer extends App {
   // eslint-disable-next-line no-unused-vars
   static async getInitialProps({ Component, router, ctx }) {

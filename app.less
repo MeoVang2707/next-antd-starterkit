@@ -1,5 +1,16 @@
+@fontfamilyDefault: Open Sans;
+@textColorDefault: #ffffff;
 
-@font-size: 50px;
-p {
-  font-size: @font-size;
+@sizes: 12, 14, 18, 24, 32;
+
+each(@sizes, {
+  @x: unit(@value, px);
+  .fs@{value} {
+    font-size: @x;
+  }
+});
+
+.td {
+  font-family: @fontfamilyDefault;
+  color: @textColorDefault;
 }

@@ -7,6 +7,7 @@ import { changeLanguage } from 'store/actions/locales';
 import { injectIntl, FormattedMessage, defineMessages } from 'react-intl';
 import { apiBase } from 'api/config';
 import socketIOClient from 'socket.io-client';
+import Layout from 'containers/Layout';
 
 import 'app.less';
 
@@ -34,7 +35,7 @@ class Index extends Component {
     const { username, changeLanguage } = this.props;
     const { temprature } = this.state;
     return (
-      <div>
+      <Layout>
         <Row>
           <Button onClick={() => changeLanguage({ lang: 'vi' })}>
             Tiếng Việt
@@ -58,7 +59,7 @@ class Index extends Component {
         >
           Get User
         </Button>
-      </div>
+      </Layout>
     );
   }
 }
